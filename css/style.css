@@ -1,0 +1,187 @@
+body {
+    background: white;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.main-title {
+    font-family: "Inter", system-ui;
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+.web-count {
+    font-family: "Indie Flower", cursive;
+}
+.update-btn{
+ display: none;
+}
+
+.form-container {
+    background: #e7e7e74a;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    max-width: 875px;
+}
+.trust-card a{
+    text-decoration: none;
+    color: #202020;
+    font-size: 18px;
+    cursor: pointer;
+}
+.trust-card {
+    transition: transform 0.3s ease;
+}
+
+.trust-card:hover {
+    transform: rotate(-2deg);
+}
+
+.small-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #505050;
+}
+
+.title-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.title-icon {
+    position: absolute;
+    top: 10px;
+    right: -1px;
+    width: 50px;
+    opacity: 0.9;
+}
+
+.trust-card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    padding-top: 2.5rem;
+    position: relative;
+}
+
+.trust-card h5 {
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+.trust-card p {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.bookmark-icon {
+    position: absolute;
+    top: 1px;
+    right: 15px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.card-actions i {
+    cursor: pointer;
+    font-size: 1rem;
+    color: #666;
+    transition: color 0.2s ease;
+}
+
+.card-actions i:hover {
+    color: #000;
+}
+
+.card-actions .btn {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 6px;
+    border: none;
+}
+
+.orange-card {
+    background: #fff3ed;
+}
+
+.blue-card {
+    background: #eef2ff;
+}
+
+.purple-card {
+    background: #f7edff;
+}
+
+.swiper {
+    padding-bottom: 50px;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    background-color: #8a8b8f88;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --swiper-navigation-size: 14px;
+    transition: all 0.3s;
+    width: 40px !important;
+    height: 40px !important;
+}
+.swiper-button-next::after, .swiper-button-prev::after {
+    font-size: var(--swiper-navigation-size);
+   font-weight: 900;
+
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    color: white;
+    text-align: center;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background-color: #8A8B8F;
+}
+
+.swiper.mySwiper {
+  position: relative;
+  overflow: hidden; 
+}
+
+.swiper-container-wrapper {
+  max-width: 1100px;
+  position: relative;
+  padding: 0 60px; 
+  margin: 0 auto;
+}
+
+/* .swiper-button-next {
+     transform: translatex(170%);
+}
+
+.swiper-button-prev {
+     transform: translatex(-170%);
+}
+
+.swiper.mySwiper {
+  overflow: visible;
+} */
+
+
+
