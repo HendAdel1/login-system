@@ -1,0 +1,101 @@
+.welcome-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.welcome-box {
+  background: linear-gradient(145deg, #1a1a1a, #0c0c0c);
+  padding: 40px 60px;
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(68, 214, 44, 0.7);
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  border: 1px solid var(--main-color);
+  animation: pulse-glow 2s infinite alternate;
+}
+
+.welcome-header {
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.welcome-title {
+  color: var(--main-color);
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px rgba(68, 214, 44, 0.7);
+}
+
+.welcome-subtitle {
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.username-highlight {
+  color: var(--main-color);
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(68, 214, 44, 0.5);
+}
+
+.welcome-content {
+  margin: 30px 0;
+  padding: 20px;
+  background: rgba(17, 17, 17, 0.7);
+  border-radius: 10px;
+  border: 1px solid var(--main-color);
+}
+
+.welcome-message {
+  text-align: left;
+  color: #ccc;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.status-active {
+  color: var(--main-color);
+  font-weight: bold;
+}
+
+.logout-btn {
+  width: auto;
+  padding: 15px 30px;
+  background: transparent;
+  border: 2px solid var(--main-color);
+  border-radius: 8px;
+  color: var(--main-color);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.logout-btn:hover {
+  background: var(--main-color);
+  color: #000;
+  box-shadow: 0 0 20px var(--main-color);
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+}
+
+
+
+

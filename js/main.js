@@ -1,196 +1,143 @@
+var isLogin = true;
+var formTitle = document.getElementById("formTitle");
+var formSubtitle = document.getElementById("formSubtitle");
+var submitBtn = document.getElementById("submitBtn");
+var toggleText = document.getElementById("toggleText");
 
-// swiper
-const swiper = new Swiper(".mySwiper", {
-      slidesPerView: 1,
-      spaceBetween: 20,
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      breakpoints: {
-        768: {
-          slidesPerView: 2,
-        },
-        992: {
-          slidesPerView: 3,
-        }
+var userNameInput = document.getElementById("userNameInput");
+var emailInput = document.getElementById("emailInput");
+var passwordInput = document.getElementById("passwordInput");
+var confirmPasswordInput = document.getElementById("confirmPasswordInput");
+
+var userNameErrorMsg = document.getElementById("userNameErrorMsg");
+var emailErrorMsg = document.getElementById("emailErrorMsg");
+var passwordErrorMsg = document.getElementById("passwordErrorMsg");
+var confirmPasswordErrorMsg = document.getElementById("confirmPasswordErrorMsg");
+var errorMsg = document.getElementById("errorMsg");
+
+var allUsers = [];
+var isValid = true;
+
+var validationPatterns = {
+  name: /^[a-zA-Z0-9]{3,}$/,
+  email: /^[\w\-\.]+@[\w\-]+\.(com|net)$/i,
+  password: /^.{6,}$/
+};
+
+function validateField(element, type) {
+  var value = element.value;
+  if (!validationPatterns[type].test(value)) {
+    return false;
+  }
+  return true;
+}
+
+if (localStorage.getItem("allUsers") !== null) {
+  allUsers = JSON.parse(localStorage.getItem("allUsers"));
+}
+
+function toggleForm() {
+  isLogin = !isLogin;
+
+  formTitle.innerHTML = isLogin ? "SECURE LOGIN" : "ACCESS REQUEST";
+  formSubtitle.innerHTML = isLogin ? "Authentication required" : "Register new credentials";
+  submitBtn.innerHTML = isLogin ? "INITIATE LOGIN" : "REQUEST ACCESS";
+  toggleText.innerHTML = isLogin
+    ? `No access credentials? <a href="#" onclick="toggleForm()">REQUEST ACCESS</a>`
+    : `Already registered? <a href="#" onclick="toggleForm()">LOGIN</a>`;
+
+  document.getElementById('usernameGroup').style.display = isLogin ? "none" : "block";
+  document.getElementById('confirmPasswordGroup').style.display = isLogin ? "none" : "block";
+
+  resetErrors();
+  clearForm();
+}
+
+document.getElementById('submitBtn').addEventListener('click', function(){
+  handleSubmit();
+});
+
+function handleSubmit() {
+  resetErrors();
+  var isValid = true;
+
+  var password = passwordInput.value;
+  var confirmPassword = confirmPasswordInput.value;
+
+  var newUser = {
+    userName: userNameInput.value,
+    email: emailInput.value,
+    password: password
+  };
+
+  if (!isLogin && !validateField(userNameInput, "name")) {
+    userNameErrorMsg.innerHTML = "Username must be at least 3 characters";
+    isValid = false;
+  }
+
+  if (!validateField(emailInput, "email")) {
+    emailErrorMsg.innerHTML = "Enter a valid email ending with .com or .net";
+    isValid = false;
+  }
+
+  if (!validateField(passwordInput, "password")) {
+    passwordErrorMsg.innerHTML = "Password must be at least 6 characters";
+    isValid = false;
+  }
+
+  if (!isLogin && password !== confirmPassword) {
+    confirmPasswordErrorMsg.innerHTML = "Passwords do not match";
+    isValid = false;
+  }
+
+  if (!isValid) return;
+
+  if (!isLogin) {
+    if (isExist()) {
+      errorMsg.innerHTML = "Email already exists. Try another.";
+      return;
+    }
+
+    allUsers.push(newUser);
+    localStorage.setItem("allUsers", JSON.stringify(allUsers));
+    // alert("Registered successfully!");
+    toggleForm();
+  } else {
+    if (isExist()) {
+      window.location.href = "home.html";
+    } else {
+      errorMsg.innerHTML = "Incorrect email or password";
+    }
+  }
+}
+
+function isExist() {
+  if (!isLogin) {
+    for (var i = 0; i < allUsers.length; i++) {
+      if (allUsers[i].email == emailInput.value) {
+        return true;
       }
-    });
-
-    
-///////////////////////////////
-
-var websiteNameInput = document.getElementById("websiteName");
-var websiteUrlInput = document.getElementById("websiteUrl");
-var addBtn = document.getElementById("addBtn")
-var updateBtn = document.getElementById("updateBtn")
-var searchInput = document.getElementById("searchInput")
-var nameError = document.getElementById("nameError")
-var urlError = document.getElementById("urlError")
-var editingIndex = -1;
-var websiteList = []
-
-if(localStorage.getItem("allSitesArray")!= null){
-    websiteList = JSON.parse(localStorage.getItem("allSitesArray"))
-    display();
-}
-
-// add new website
-  function onSave() {    
-    if (!validateInputs()) return;
-  
-    var website = {
-        websiteName: websiteNameInput.value,
-        websiteUrl: websiteUrlInput.value
     }
-    websiteList.push(website);
-    localStorage.setItem("allSitesArray", JSON.stringify(websiteList))
-    display();
-    clear()
-}
-
-//regex url
-function isValidUrl(url) {
-var pattern = /^(https?:\/\/)[a-z0-9\-\.]+\.(com|net)(\/.*)?$/i;
-  return url.match(pattern) !== null;
-}
-
-//validate input
-function validateInputs() {
-  var nameValid = websiteNameInput.value !== "";
-  var urlValid = isValidUrl(websiteUrlInput.value);
-
-  websiteNameInput.classList.remove("is-valid", "is-invalid");
-  websiteUrlInput.classList.remove("is-valid", "is-invalid");
-
-  nameError.classList.add("d-none")
-  urlError.classList.add("d-none")
-
-
-  if (nameValid) {
-    websiteNameInput.classList.add("is-valid");
+    return false;
   } else {
-    websiteNameInput.classList.add("is-invalid");
-    nameError.classList.remove("d-none")
-  }
-
-  if (urlValid) {
-    websiteUrlInput.classList.add("is-valid");
-  } else {
-    websiteUrlInput.classList.add("is-invalid");
-    urlError.classList.remove("d-none")
-  }
-
-  return nameValid && urlValid;
-}
-
-
-
-// display cards of websites
-function display(){
-    var temp = '';
-    var colorClasses = ['orange-card', 'blue-card', 'purple-card']
-
-    for(var i = 0 ; i < websiteList.length ; i++ ){
-        var cardColor = colorClasses[i % colorClasses.length]
-
-        temp+= `
-            <div class="swiper-slide">
-                <div class="trust-card ${cardColor}">
-                    <i class="fa-solid fa-bookmark bookmark-icon"></i>
-                    <h5 class="web-count">${i+1}</h5>
-                    <h5>${websiteList[i].websiteName}</h5>
-                    <p><a href="${websiteList[i].websiteUrl}"target="_blank">${websiteList[i].websiteUrl}</a></p>
-                    <div class="card-actions">
-                    <button onclick="visitWebsite(${i})" class="btn btn-success btn-sm">Visit</button>
-                    <button onclick="editWebsite(${i})" class="btn btn-primary btn-sm">Edit</button>
-                    <button onclick="deleteWebsite(${i})" class="btn btn-danger btn-sm">Delete</button>
-                    </div>
-                </div>
-            </div>
-        `;
+    for (var i = 0; i < allUsers.length; i++) {
+      if (allUsers[i].email == emailInput.value && allUsers[i].password == passwordInput.value) {
+        localStorage.setItem("username", allUsers[i].userName);
+        return true;
+      }
     }
-    document.getElementById("websiteCards").innerHTML = temp;
-    swiper.update();
-    swiper.slideTo(swiper.slides.length - 1);
+    return false;
+  }
 }
 
-// visit link
-function visitWebsite(index){
-    window.open(websiteList[index].websiteUrl)
+function clearForm() {
+  document.getElementById("authForm").reset();
 }
 
-// edit website
-function editWebsite(index){
-    websiteNameInput.value = websiteList[index].websiteName
-    websiteUrlInput.value = websiteList[index].websiteUrl
-    updateBtn.style.display = "block"
-    addBtn.style.display = "none"
-    editingIndex = index
+function resetErrors() {
+  userNameErrorMsg.innerHTML = "";
+  emailErrorMsg.innerHTML = "";
+  passwordErrorMsg.innerHTML = "";
+  confirmPasswordErrorMsg.innerHTML = "";
+  errorMsg.innerHTML = "";
 }
-
-// save the edited website
-function onUpdate(index){
-  if (!validateInputs() || editingIndex === -1) return;
-
-        websiteList[editingIndex].websiteName = websiteNameInput.value
-        websiteList[editingIndex].websiteUrl = websiteUrlInput.value
-         localStorage.setItem("allSitesArray", JSON.stringify(websiteList));
-           display();
-           clear();
-           addBtn.style.display = "block";
-           updateBtn.style.display = "none";
-           editingIndex = -1
-    
-}
-
-// search
-function search() {
-    var searchData = searchInput.value.toLowerCase();
-    var temp = '';
-    var colorClasses = ['orange-card', 'blue-card', 'purple-card'];
-    var displayIndex = 1;
-
-    for (var i = 0; i < websiteList.length; i++) {
-        if (websiteList[i].websiteName.toLowerCase().includes(searchData)) {
-            var cardColor = colorClasses[i % colorClasses.length];
-            temp += `
-                <div class="swiper-slide">
-                    <div class="trust-card ${cardColor}">
-                        <i class="fa-solid fa-bookmark bookmark-icon"></i>
-                        <h5 class="web-count">${displayIndex}</h5>
-                        <h5>${websiteList[i].websiteName}</h5>
-                        <p><a href="${websiteList[i].websiteUrl}" target="_blank">${websiteList[i].websiteUrl}</a></p>
-                        <div class="card-actions">
-                            <button onclick="visitWebsite(${i})" class="btn btn-success btn-sm">Visit</button>
-                            <button onclick="editWebsite(${i})" class="btn btn-primary btn-sm">Edit</button>
-                            <button onclick="deleteWebsite(${i})" class="btn btn-danger btn-sm">Delete</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            displayIndex++;
-        }
-    }
-
-    document.getElementById("websiteCards").innerHTML = temp;
-    swiper.update();
-}
-
-// delete website
-function deleteWebsite(index){
-    websiteList.splice(index,1)
-    localStorage.setItem("allSitesArray", JSON.stringify(websiteList))
-    display()
-}
-
-// clear inputs
-function clear(){
-    websiteNameInput.value = null
-    websiteUrlInput.value = null
-    websiteNameInput.classList.remove("is-valid", "is-invalid");
-    websiteUrlInput.classList.remove("is-valid", "is-invalid");
-}
-
-
-

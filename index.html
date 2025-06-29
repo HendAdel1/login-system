@@ -1,78 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bookmarker</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Secure Access Portal</title>
   <link rel="stylesheet" href="css/all.min.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Inter:wght@100..900&display=swap" rel="stylesheet">
-  <!-- Swiper CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 </head>
-
 <body>
-  <div class="container py-3">
-    <!-- Title -->
-    <div class="title-container text-center mb-4">
-      <div class="title-wrapper">
-        <h2 class="main-title">Bookmarker</h2>
-        <img src="images/bookmark.png" alt="Bookmark" class="title-icon" />
-        <input oninput="search()" id="searchInput" type="search" class="form-control" placeholder="search...">
-      </div>
-    </div>
-
-    <!-- Form -->
-    <div class="row mb-5">
-      <div class="col-12 d-flex justify-content-center">
-        <div class="form-container shadow-sm w-100">
-          <form>
-            <p class="fw-bold form-title">Bookmark Your Favourite Website</p>
-            <div class="form-group mb-3">
-              <label class="small-title" for="websiteName">Website Name</label>
-              <input type="text" class="form-control" id="websiteName">
-              <p id="nameError" class="text-danger small d-none">Website name is required</p>
-
-            </div>
-            <div class="form-group mb-3">
-              <label class="small-title" for="websiteUrl">Website Link</label>
-              <input type="url" class="form-control" id="websiteUrl">
-              <p id="urlError" class="text-danger small d-none">Please enter a valid website link</p>
-            </div>
-            <button id="addBtn" onclick="onSave()" type="button" class="btn btn-primary px-4 w-100 add-btn">Save</button>
-            <button id="updateBtn" onclick="onUpdate()" type="button" class="btn btn-primary px-4 w-100 update-btn">Update</button>
-          </form>
+  <!-- Glowing background elements -->
+  <div class="rect rect1"></div>
+  <div class="rect rect2"></div>
+  <div class="rect rect3"></div>
+  
+  <!-- Main container -->
+  <div class="container">
+    <div class="access-panel">
+      <div class="panel-header">
+        <h2 id="formTitle" class="panel-title">SECURE LOGIN</h2>
+        <p id="formSubtitle" class="panel-subtitle">Authentication required</p>
+        <div class="status-indicator">
+          <span class="status-light"></span>
+          <span>SYSTEM ONLINE</span>
         </div>
       </div>
-    </div>
-
-    <!-- Swiper Cards -->
-     <div class="swiper-container-wrapper position-relative">
-
-    <div class="swiper mySwiper" style="margin: 0 -20px;">
-
-      <div class="swiper-wrapper" id="websiteCards">
-
-
+      
+      <div id="authForm" class="panel-form">
+        <div class="input-group" id="usernameGroup" style="display: none;">
+          <label for="userNameInput">USERNAME</label>
+          <input type="text" id="userNameInput" placeholder="Enter your username" />
+          <p id="userNameErrorMsg" class="error-message"></p>
+        </div>
+        
+        <div class="input-group">
+          <label for="emailInput">EMAIL</label>
+          <input type="email" id="emailInput" placeholder="user@domain.com" />
+          <p id="emailErrorMsg" class="error-message"></p>
+        </div>
+        
+        <div class="input-group">
+          <label for="passwordInput">PASSWORD</label>
+          <input type="password" id="passwordInput" placeholder="••••••••" />
+          <p id="passwordErrorMsg" class="error-message"></p>
+        </div>
+        
+        <div class="input-group" id="confirmPasswordGroup" style="display: none;">
+          <label for="confirmPasswordInput">CONFIRM PASSWORD</label>
+          <input type="password" id="confirmPasswordInput" placeholder="••••••••" />
+          <p id="confirmPasswordErrorMsg" class="error-message"></p>
+        </div>
+        
+        <p id="errorMsg" class="error-message main-error"></p>
+        
+        <button type="button" id="submitBtn" class="access-btn">
+          <span class="btn-icon"><i class="fas fa-fingerprint"></i></span>
+          <span class="btn-text" id="btnText">INITIATE LOGIN</span>
+        </button>
       </div>
-
-       <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-    </div>
-
-      <!-- Swiper Buttons -->
-     
+      
+      <div class="panel-footer">
+        <p id="toggleText" class="toggle-text">
+          <span id="togglePrompt">No access credentials?</span>
+          <a href="#" onclick="toggleForm()" class="toggle-link">REQUEST ACCESS</a>
+        </p>
+      </div>
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- badges -->
+<div class="developer-badge">
+  <span class="dev-name">Hend Adel</span>
+  <div class="dev-links">
+    <a href="mailto:1hend.adel1@gmail.com" class="dev-link" title="Email">
+      <i class="fas fa-envelope"></i>
+    </a>
+    <a href="https://github.com/HendAdel1" target="_blank" class="dev-link" title="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://linkedin.com/in/hend-adel" target="_blank" class="dev-link" title="LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </a>
+  </div>
+</div>
+  
   <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="js/main.js"></script>
 </body>
-
 </html>
